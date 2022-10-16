@@ -139,4 +139,58 @@ describe("Order repository test", () => {
       ],
     });
   });
+
+
+
+  it("should find a order", async () => {
+    const customerRepository = new CustomerRepository();
+    const customer = new Customer("123", "Customer 1");
+    const address = new Address("Street 1", 1, "Zipcode 1", "City 1");
+    customer.changeAddress(address);
+    await customerRepository.create(customer);
+
+    const productRepository = new ProductRepository();
+    const product = new Product("123", "Product 1", 10);
+    await productRepository.create(product);
+
+    const ordemItem = new OrderItem(
+      "1",
+      product.name,
+      product.price,
+      product.id,
+      2
+    );
+
+    const order = new Order("123", "123", [ordemItem]);
+
+    const orderRepository = new OrderRepository();
+    await orderRepository.create(order);
+
+    console.log("caiu aqui: ", order);
+    
+
+    const orderResult = await orderRepository.find(order.id);
+
+    expect(order).toStrictEqual(orderResult);
+  });
+
+  it('should find all products', async () => {
+    const productRepository = new ProductRepository()
+    const product1 = new Product("1", "Playstation 5 12", 5000)
+    await productRepository.create(product1)
+    
+    const product2 = new Product("2", "Dragon Age: Inquisition", 50)
+    await productRepository.create(product2)
+
+    const foundProducts = await productRepository.findAll()
+
+    const products = [product1, product2]
+
+    expect(products).toEqual(foundProducts)
+  });
+
+
+  
+
+
 });
