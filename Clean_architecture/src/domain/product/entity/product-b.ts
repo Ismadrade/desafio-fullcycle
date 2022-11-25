@@ -1,15 +1,20 @@
+import Entity from "../../@shared/entity/entity.abstract";
+import NotificationError from "../../@shared/notification/notification.error";
 import ProductInterface from "./product.interface";
 
 export default class ProductB implements ProductInterface {
+
   private _id: string;
   private _name: string;
   private _price: number;
 
   constructor(id: string, name: string, price: number) {
+
     this._id = id;
     this._name = name;
     this._price = price;
     this.validate();
+
   }
 
   get id(): string {
